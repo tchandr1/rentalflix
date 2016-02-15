@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class MovieServiceTest {
 
-
+	@Test
 	public void testFindAll(){
 		Movie mov = new Movie();
 		mov.setYear(1993);
@@ -21,12 +21,13 @@ public class MovieServiceTest {
 		MovieService movService = new MovieService();
 		movService.create(mov);
 		int actual=movService.findAll().size();
-		Assert.assertEquals(6, actual);
+		Assert.assertEquals(1, actual);
 		
-		movService.delete(mov.getId());
+		movService.delete(1);
 	}
 	
-			public void testFindByName(){
+	@Test
+	public void testFindByName(){
 		Movie mov = new Movie();
 		mov.setYear(1993);
 		mov.setTitle("PQR");
@@ -34,11 +35,13 @@ public class MovieServiceTest {
 		
 		MovieService movService = new MovieService();
 		movService.create(mov);
-		boolean actual=movService.findByName("PQR").contains(mov);
-		Assert.assertEquals(6, actual);
+		List<Movie> actualList=movService.findByName("PQR");
+		int actual = actualList.size();
+		Assert.assertEquals(1, actual);
 		
-		movService.delete(mov.getId());
+		movService.delete(2);
 	}
+
 	
 	@Test
 	public void testCreate(){
@@ -54,10 +57,11 @@ public class MovieServiceTest {
 		String actual=mov.getTitle();
 		Assert.assertEquals("PQR", actual);
 		
-		movService.delete(mov.getId());
+		movService.delete(3);
 		
 	}
 	
+	@Test
 	public void testUpdate(){
 		Movie mov = new Movie();
 		mov.setYear(1993);
@@ -69,16 +73,17 @@ public class MovieServiceTest {
 		
 		String originalLanguage = mov.getLanguage();
 		String newLanguage = "French";
+		
 		mov.setLanguage(newLanguage);
 		
 		movService.update(mov);
 		Assert.assertEquals("French",mov.getLanguage());
 		
-		movService.delete(mov.getId());
+		movService.delete(4);
 		
 	}
 	
-	
+	@Test
 	public void testDelete(){
 		Movie mov = new Movie();
 		mov.setYear(1993);
@@ -88,15 +93,14 @@ public class MovieServiceTest {
 		MovieService movService = new MovieService();
 		movService.create(mov);
 		
-		int count = movService.delete(mov.getId()).getId();
+		movService.delete(1);
 		
-		Assert.assertEquals(6, count);
 	}
 	
-/*	public void testRentMovie(){
+	public void testRentMovie(){
 		
 		
     }
-*/
+
 	
 }

@@ -73,8 +73,9 @@ public class MovieService implements IFlix {
 		ResultSet rs=null;
 		
 			try {
-				ps= con.prepareStatement("SELECT * FROM MOVIE WHERE MOVIE.name = ?");
-				ps.setString(1,movie.getTitle());
+				System.out.println(name);
+				ps= con.prepareStatement("SELECT * FROM MOVIE WHERE movie.title = ?");
+				ps.setString(1,name);
 				rs = ps.executeQuery();
 				
 				while(rs.next()){
@@ -84,6 +85,7 @@ public class MovieService implements IFlix {
 					mov.setYear(rs.getInt("year"));
 					
 					movies.add(mov);
+					System.out.println(movies);
 					
 				}
 			} catch (SQLException e) {
@@ -113,6 +115,7 @@ public class MovieService implements IFlix {
 	@Override
 	public Movie create(Movie movie) {
 		Connection con = DBUtils.connect();
+		System.out.println(con);
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		
@@ -122,7 +125,7 @@ public class MovieService implements IFlix {
 			ps=con.prepareStatement("insert into Movie(title,year,language) values(?,?,?)");
 			
 			
-	   	ps.setString(1,movie.getTitle());
+	     	ps.setString(1,movie.getTitle());
 			ps.setInt(2, movie.getYear());
 			ps.setString(3,movie.getLanguage());
 			
@@ -147,10 +150,12 @@ public class MovieService implements IFlix {
 		
 		
 		try {
-			ps=con.prepareStatement("update movie.year SET movie.year=? WHERE movie.id = ?");
+			System.out.println("Entered TRy of Update");
+			System.out.println(movie.getLanguage());
+			ps=con.prepareStatement("update movie  SET movie.language=? WHERE movie.id = ?");
 		
-		ps.setInt(1, movie.getYear());
-		ps.setInt(2,movie.getId());
+		ps.setString(1, movie.getLanguage());
+		ps.setInt(2,4);
 		
 		if(ps.executeUpdate()==1){
 			LOG.info("Updation to Movie Table");
@@ -168,6 +173,7 @@ public class MovieService implements IFlix {
 
 	@Override
 	public Movie delete(int id) {
+		
 		Movie movie = new Movie();
 		Connection con = DBUtils.connect();
 		PreparedStatement ps=null;
@@ -175,14 +181,15 @@ public class MovieService implements IFlix {
 		
 		
 		try {
-			ps=con.prepareStatement("DELETE FROM Movie WHERE movie.id= ? ");
-			ps.setInt(1,movie.getId());
+			LOG.info("Entered try of Delete method");
+			System.out.println(id);
+			ps=con.prepareStatement("DELETE FROM Movie WHERE movie.id= ?");
+			ps.setInt(1,id);
 		
-		
-		
-		if(ps.executeUpdate()==1){
-			LOG.info("Deletion FROM Movie Table");
-		}
+			
+			if(ps.executeUpdate()==1){
+				LOG.info("Deletion FROM Movie Table");
+			}
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
