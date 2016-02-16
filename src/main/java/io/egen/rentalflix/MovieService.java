@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,7 +122,7 @@ public class MovieService implements IFlix {
 		
 		
 		try {
-			LOG.info("Entered try of create");
+			System.out.println("Entered try of create");
 			ps=con.prepareStatement("insert into Movie(title,year,language) values(?,?,?)");
 			
 			
@@ -155,7 +156,7 @@ public class MovieService implements IFlix {
 			ps=con.prepareStatement("update movie  SET movie.language=? WHERE movie.id = ?");
 		
 		ps.setString(1, movie.getLanguage());
-		ps.setInt(2,4);
+		ps.setInt(2,3);
 		
 		if(ps.executeUpdate()==1){
 			LOG.info("Updation to Movie Table");
@@ -181,7 +182,7 @@ public class MovieService implements IFlix {
 		
 		
 		try {
-			LOG.info("Entered try of Delete method");
+			System.out.println("Entered try of Delete");
 			System.out.println(id);
 			ps=con.prepareStatement("DELETE FROM Movie WHERE movie.id= ?");
 			ps.setInt(1,id);
@@ -201,17 +202,24 @@ public class MovieService implements IFlix {
 
 	@Override
 	public boolean rentMovie(int movieId, String user) {
-		int[] rentedMovieId = {1,2};
-		 for(int i=0;i<rentedMovieId.length;i++){
-			 if(movieId ==rentedMovieId[i]){
-				 return false;
-			 }else
-				 
-				 return true;
-		 }
-		 return false;
-		 
+		HashMap<String,Integer> hmap = new HashMap<String,Integer>();
 		
+		hmap.put("Thanu",1);
+		hmap.put("Vinu",2);
+		hmap.put("King",3);
+		 
+		Integer id = hmap.get(user);
+		System.out.println(id);
+		System.out.println(movieId);
+		
+		if(hmap.values().contains(user)){
+			return false;
+		}
+		else
+			return true;
+		
+		
+	
 	}
 
 

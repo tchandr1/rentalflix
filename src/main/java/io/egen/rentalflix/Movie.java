@@ -23,6 +23,11 @@ public class Movie {
 	}
 	
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -45,6 +50,7 @@ public class Movie {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-	
+
+
 	
 }
